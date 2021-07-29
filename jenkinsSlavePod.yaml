@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    jenkins: slave
+    jenkins/label: jnlp-agent
+spec:
+  imagePullSecrets:
+    - name: scc-image
+  containers:
+    - name: jnlp
+      image: registry.cn-hangzhou.aliyuncs.com/wiskind/scc-jenkins-jnlp:4.3
+      imagePullPolicy: IfNotPresent
+      tty: true
+      volumeMounts:
+        - name: gradle-data
+          mountPath: /root/.gradle
+    - name: docker
+      image: docker:latest
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+    - name: kustomize
+      image: registry.cn-hangzhou.aliyuncs.com/wiskind/scc-kustomize:alpine-3.6.1
+      imagePullPolicy: IfNotPresent
+      command:
+        - cat
+      tty: true
+  restartPolicy: Never
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                  - cn-hangzhou.192.168.6.27
+  serviceAccount: jenkins
+  volumes:
+    - name: docker-socket
+      hostPath:
+        path: /var/run/docker.sock
+    - name: gradle-data
+      hostPath:
+        path: /data/gradle/tw-leasing-demo

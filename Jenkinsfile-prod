@@ -1,0 +1,93 @@
+pipeline {
+    agent {
+        kubernetes {
+            label 'scc-supplier-service-slave'
+            yamlFile 'jenkinsSlavePod.yaml'
+            defaultContainer 'jnlp'
+        }
+    }
+
+    environment {
+        IMAG_REPOSITORY = "registry.cn-hangzhou.aliyuncs.com/wiskind/scc-supplier-service"
+        IMAG_TAG = "${env.Build_TIMESTAMP}-PROD-${env.BUILD_NUMBER}"
+        SONAR_URL = "${SONAR_URL}"
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
+    }
+
+    stages{
+        stage('Package'){
+            steps{
+                lock(resource: 'gradle_build_supplier_prod', inversePrecedence: true) {
+                    sh "./gradlew clean build -Dorg.gradle.daemon=false -Dsonar.host.url=${SONAR_URL} -Dsonar.login=${SONAR_TOKEN}"
+                }
+            }
+            post {
+                always {
+                   publishHTML target: [
+                            allowMissing         : true,
+                            alwaysLinkToLastBuild: true,
+                            keepAll              : true,
+                            reportDir            : 'build/reports/jacoco/test/html',
+                            reportFiles          : 'index.html',
+                            reportName           : 'Jacoco Report'
+                    ]
+
+                    publishHTML target: [
+                            allowMissing         : true,
+                            alwaysLinkToLastBuild: true,
+                            keepAll              : true,
+                            reportDir            : 'build/reports/tests/test',
+                            reportFiles          : 'index.html',
+                            reportName           : 'Unit Test Report'
+                    ]
+
+                    publishHTML target: [
+                            allowMissing         : true,
+                            alwaysLinkToLastBuild: true,
+                            keepAll              : true,
+                            reportDir            : 'build/reports/tests/integrationTest',
+                            reportFiles          : 'index.html',
+                            reportName           : 'Integration Test Report'
+                    ]
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                container('docker') {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'DOCKER_CREDENTIALS',
+                        passwordVariable: 'DOCKER_CREDENTIALS_PSW',
+                        usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
+                        sh """
+                            docker login registry.cn-hangzhou.aliyuncs.com -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}
+                            docker build -t ${IMAG_REPOSITORY}:${IMAG_TAG} .
+                            docker push ${IMAG_REPOSITORY}:${IMAG_TAG}
+                            docker images --filter=reference=\"${IMAG_REPOSITORY}:*\" -q | xargs docker rmi --force || true
+                         """
+                    }
+                }
+            }
+        }
+
+        stage('Deploy To PROD') {
+            environment {
+                GIT_CREDS = credentials('GITLAB')
+            }
+
+            steps {
+                container('kustomize') {
+                  sh "git clone --depth=1 http://$GIT_CREDS_USR:$GIT_CREDS_PSW@gitlab.wiskind.cn/gits/scc/scc-argocd-apps.git scc-argocd-apps-prod"
+                  sh "git config --global user.email 'qlyan@thoughtworks.com'"
+
+                  dir("scc-argocd-apps-prod") {
+                    sh "cd ./scc-supplier-service/overlay/prod && kustomize edit set image ${IMAG_REPOSITORY}=:${IMAG_TAG}"
+                    sh "git commit -am '[CD] publish new version to st env' && git pull -r && git push || echo 'no changes'"
+                  }
+                }
+            }
+        }
+
+    }
+}
