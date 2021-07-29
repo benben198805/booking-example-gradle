@@ -1,4 +1,4 @@
-package leasing.presentation.dto.response.promotionProposal;
+package leasing.presentation.dto.response.promotion;
 
 import leasing.domain.model.enums.PromotionProposalType;
 import leasing.domain.model.enums.PromotionProposalStatus;

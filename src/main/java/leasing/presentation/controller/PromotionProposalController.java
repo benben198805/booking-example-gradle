@@ -3,7 +3,7 @@ package leasing.presentation.controller;
 import leasing.application.PromotionProposalApplicationService;
 import leasing.domain.model.PromotionProposal;
 import leasing.presentation.assembler.ModelToResponseMapper;
-import leasing.presentation.dto.response.promotionProposal.PromotionProposalResponse;
+import leasing.presentation.dto.response.promotion.PromotionProposalResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

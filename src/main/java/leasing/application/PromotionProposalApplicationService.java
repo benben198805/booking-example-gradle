@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 public class PromotionProposalApplicationService {
     private final PromotionProposalRepository promotionProposalRepository;
 
-    public PromotionProposal queryPromotionProposal(Long Id) {
-        return promotionProposalRepository.findById(Id)
+    public PromotionProposal queryPromotionProposal(Long id) {
+        return promotionProposalRepository.findById(id)
                                           .orElseThrow(() ->
-                new NotFoundException("PROMOTION_PROPOSAL_NOT_FOUND", "cannot found promotion proposal id: " + Id));
+                new NotFoundException("PROMOTION_PROPOSAL_NOT_FOUND", "cannot found promotion proposal id: " + id));
     }
 
     public Page<PromotionProposal> queryAllPromotionProposal(Pageable pageable) {

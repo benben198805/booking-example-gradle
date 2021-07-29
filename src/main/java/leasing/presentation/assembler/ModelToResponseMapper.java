@@ -1,7 +1,7 @@
 package leasing.presentation.assembler;
 
 import leasing.domain.model.PromotionProposal;
-import leasing.presentation.dto.response.promotionProposal.PromotionProposalResponse;
+import leasing.presentation.dto.response.promotion.PromotionProposalResponse;
 import leasing.utils.DateUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
