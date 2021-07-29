@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  shutdown: graceful
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+  main:
+    cloud-platform: kubernetes
+  lifecycle:
+    timeout-per-shutdown-phase: 5s
+  profiles:
+    active: local # default profile
+
+swagger:
+  enable: true
