@@ -18,8 +18,3 @@ spring:
     cloud-platform: kubernetes
   lifecycle:
     timeout-per-shutdown-phase: 5s
-  profiles:
-    active: local # default profile
-
-swagger:
-  enable: true
