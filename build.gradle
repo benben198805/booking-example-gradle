@@ -19,9 +19,6 @@ repositories {
     maven {
         url "https://maven.aliyun.com/repository/central"
     }
-    maven {
-        url "http://192.168.0.18:8081/nexus/content/groups/wiskind/"
-    }
     mavenCentral()
 }
 
@@ -41,6 +38,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.16'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 
@@ -69,6 +67,13 @@ dependencies {
     testImplementation('io.rest-assured:xml-path:4.3.1')
     testImplementation('com.tngtech.archunit:archunit:0.14.1')
     testImplementation('com.tngtech.archunit:archunit-junit4:0.14.1')
+    testImplementation('com.tngtech.archunit:archunit-junit4:0.14.1')
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.0.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.0.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.0.2")
+    testImplementation("org.junit.platform:junit-platform-launcher:1.0.2")
+    testImplementation("org.junit.platform:junit-platform-runner:1.0.2")
 
     runtimeOnly('mysql:mysql-connector-java:8.0.21')
 
@@ -81,6 +86,8 @@ dependencies {
 
     implementation "io.swagger:swagger-annotations:1.5.21"
     implementation "io.swagger:swagger-models:1.5.21"
+
+
 }
 
 bootJar {

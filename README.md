@@ -1,4 +1,4 @@
-# tw-leasing-demo
+# tw-rental-backend-on-boarding
 
 ## 技术说明
 项目及相关配置出处： https://github.com/ryandjf/example-product-service （供参考）
@@ -39,7 +39,7 @@ docker-compose up -d
 ### 用Intellij IDEA打开项目
 ```
 ./gradlew idea
-open leasing-brand.ipr
+open rental-brand.ipr
 ```
 
 ### 提交代码
