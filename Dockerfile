@@ -1,4 +1,4 @@
-FROM registry.cn-hangzhou.aliyuncs.com/wiskind/openjdk:8-jre-alpine-apm-agent
+FROM benben198805/openjdk:8-jre-alpine-apm-agent
 
 COPY build/libs/*.jar /opt/app.jar
 
