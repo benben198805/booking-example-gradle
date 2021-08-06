@@ -10,4 +10,8 @@ public interface HouseRepository {
     Optional<House> findById(Long id);
 
     Page<House> queryAllHouses(Pageable pageable);
+
+    House saveHouse(House house);
+
+    void deleteById(Long id);
 }

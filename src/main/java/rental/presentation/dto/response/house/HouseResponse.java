@@ -1,4 +1,4 @@
-package rental.presentation.dto.response.promotion;
+package rental.presentation.dto.response.house;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

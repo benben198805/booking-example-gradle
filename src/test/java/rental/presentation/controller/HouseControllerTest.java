@@ -10,15 +10,22 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import rental.application.HouseApplicationService;
 import rental.domain.model.House;
-import rental.presentation.dto.response.promotion.HouseResponse;
+import rental.presentation.dto.command.CreateHouseCommand;
+import rental.presentation.dto.response.house.HouseResponse;
+import rental.presentation.exception.InternalServerException;
 import rental.presentation.exception.NotFoundException;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -70,6 +77,33 @@ public class HouseControllerTest {
 
         // when
         controller.findHouseById(1L);
+
+        // then
+    }
+
+    @Test
+    public void should_save_house() {
+        // given
+        doNothing().when(applicationService).saveHouse(any());
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+
+        // when
+        controller.save(command);
+
+        // then
+        verify(applicationService, times(1)).saveHouse(any());
+    }
+
+    @Test(expected = InternalServerException.class)
+    public void should_throw_exception_when_save_house_has_feign_exception() {
+        // given
+
+        doThrow(new InternalServerException(400, "INTERNAL_SERVER_EXCEPTION", "internal exception"))
+                .when(applicationService).saveHouse(any());
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+
+        // when
+        controller.save(command);
 
         // then
     }

@@ -1,7 +1,7 @@
 package rental.presentation.assembler;
 
 import rental.domain.model.House;
-import rental.presentation.dto.response.promotion.HouseResponse;
+import rental.presentation.dto.response.house.HouseResponse;
 import rental.utils.DateUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

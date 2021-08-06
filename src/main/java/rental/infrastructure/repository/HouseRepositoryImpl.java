@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import rental.domain.model.House;
 import rental.domain.repository.HouseRepository;
+import rental.infrastructure.dataentity.HouseEntity;
 import rental.infrastructure.mapper.EntityToModelMapper;
+import rental.infrastructure.mapper.ModelToEntityMapper;
 import rental.infrastructure.persistence.HouseJpaPersistence;
 
 import java.util.Optional;
@@ -26,5 +28,16 @@ public class HouseRepositoryImpl implements HouseRepository {
     @Override
     public Page<House> queryAllHouses(Pageable pageable) {
         return this.persistence.findAll(pageable).map(EntityToModelMapper.INSTANCE::mapToModel);
+    }
+
+    @Override
+    public House saveHouse(House house) {
+        HouseEntity savedHouse = this.persistence.save(ModelToEntityMapper.INSTANCE.mapToEntity(house));
+        return EntityToModelMapper.INSTANCE.mapToModel(savedHouse);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.persistence.deleteById(id);
     }
 }

@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
@@ -93,5 +94,33 @@ public class HouseRepositoryImplTest {
 
         // then
         assertFalse(result.isPresent());
+    }
+
+    @Test
+    public void should_save_house() {
+        // given
+        String houseName = "house-1";
+        House house = House.builder().name(houseName).build();
+
+        // when
+        House result = this.repository.saveHouse(house);
+
+        // then
+        HouseEntity houseEntity = entityManager.getEntityManager().find(HouseEntity.class, result.getId());
+        assertEquals(houseName, houseEntity.getName());
+    }
+
+    @Test
+    public void should_delete_house_by_id() {
+        // given
+        HouseEntity houseEntity = HouseEntity.builder().name("house-1").build();
+        entityManager.persist(houseEntity);
+
+        // when
+        this.repository.deleteById(houseEntity.getId());
+
+        // then
+        HouseEntity result = entityManager.getEntityManager().find(HouseEntity.class, houseEntity.getId());
+        assertNull(result);
     }
 }

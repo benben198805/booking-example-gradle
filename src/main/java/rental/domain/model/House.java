@@ -28,4 +28,14 @@ public class House {
 
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+
+    public static House init(String name, String location, BigDecimal price, LocalDateTime establishedTime) {
+        return House.builder()
+                    .name(name)
+                    .location(location)
+                    .price(price)
+                    .establishedTime(establishedTime)
+                    .status(HouseStatus.PENDING)
+                    .build();
+    }
 }

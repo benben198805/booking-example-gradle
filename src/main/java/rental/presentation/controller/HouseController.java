@@ -1,9 +1,5 @@
 package rental.presentation.controller;
 
-import rental.application.HouseApplicationService;
-import rental.domain.model.House;
-import rental.presentation.assembler.ModelToResponseMapper;
-import rental.presentation.dto.response.promotion.HouseResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -14,8 +10,15 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import rental.application.HouseApplicationService;
+import rental.domain.model.House;
+import rental.presentation.assembler.ModelToResponseMapper;
+import rental.presentation.dto.command.CreateHouseCommand;
+import rental.presentation.dto.response.house.HouseResponse;
 
 @RestController
 @RequestMapping("/houses")
@@ -40,6 +43,11 @@ public class HouseController {
     public HouseResponse findHouseById(@PathVariable Long id) {
         House house = promotionProposalApplicationService.findHouseById(id);
         return ModelToResponseMapper.INSTANCE.mapToPromotionProposalResponse(house);
+    }
+
+    @PostMapping
+    public void save(@RequestParam CreateHouseCommand command) {
+        promotionProposalApplicationService.saveHouse(command);
     }
 
 }
