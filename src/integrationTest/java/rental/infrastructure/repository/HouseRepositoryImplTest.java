@@ -14,7 +14,11 @@ import rental.domain.model.House;
 import rental.infrastructure.dataentity.HouseEntity;
 import rental.infrastructure.persistence.HouseJpaPersistence;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 
@@ -67,16 +71,27 @@ public class HouseRepositoryImplTest {
     }
 
     @Test
-    public void should_find_0_houses_with_page() {
+    public void should_get_house_with_id() {
         // given
-        PageRequest pageable = PageRequest.of(0, 20);
+        HouseEntity houseEntity = entityManager.persistAndFlush(HouseEntity.builder().name("house-1").build());
 
         // when
-        Page<House> result = this.repository.queryAllHouses(pageable);
+        Optional<House> result = this.repository.findById(houseEntity.getId());
 
         // then
-        assertEquals(0, result.getTotalElements());
-        assertEquals(0, result.getContent().size());
-        assertEquals(0, result.getTotalPages());
+        assertTrue(result.isPresent());
+        assertEquals("house-1", result.get().getName());
+    }
+
+    @Test
+    public void should_get_house_with_not_exist_id() {
+        // given
+        HouseEntity houseEntity = entityManager.persistAndFlush(HouseEntity.builder().name("house-1").build());
+
+        // when
+        Optional<House> result = this.repository.findById(houseEntity.getId() + 1);
+
+        // then
+        assertFalse(result.isPresent());
     }
 }

@@ -37,9 +37,9 @@ public class HouseController {
     }
 
     @GetMapping("/{id}")
-    public HouseResponse queryPromotionProposalById(@PathVariable Long id) {
-        House promotionProposal = promotionProposalApplicationService.queryPromotionProposal(id);
-        return ModelToResponseMapper.INSTANCE.mapToPromotionProposalResponse(promotionProposal);
+    public HouseResponse findHouseById(@PathVariable Long id) {
+        House house = promotionProposalApplicationService.findHouseById(id);
+        return ModelToResponseMapper.INSTANCE.mapToPromotionProposalResponse(house);
     }
 
 }

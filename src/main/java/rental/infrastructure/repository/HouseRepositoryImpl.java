@@ -20,7 +20,7 @@ public class HouseRepositoryImpl implements HouseRepository {
 
     @Override
     public Optional<House> findById(Long id) {
-        return null;
+        return this.persistence.findById(id).map(EntityToModelMapper.INSTANCE::mapToModel);
     }
 
     @Override
