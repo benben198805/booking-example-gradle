@@ -28,20 +28,6 @@ public class FeignClientConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Bean
-    public Encoder multipartFormEncoder() {
-        return new SpringFormEncoder(
-                new SpringEncoder(
-                        () -> new HttpMessageConverters(new MappingJackson2HttpMessageConverter())
-                )
-        );
-    }
-
-    @Bean
-    public feign.Logger.Level multipartLoggerLevel() {
-        return feign.Logger.Level.FULL;
-    }
-
-    @Bean
     public ErrorDecoder feignErrorHandler() {
         final ErrorDecoder errorDecoder = new ErrorDecoder.Default();
 

@@ -85,7 +85,8 @@ public class HouseControllerTest {
     public void should_save_house() {
         // given
         doNothing().when(applicationService).saveHouse(any());
-        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1")
+                                                       .price(BigDecimal.TEN).location("location").build();
 
         // when
         controller.save(command);
@@ -100,7 +101,8 @@ public class HouseControllerTest {
 
         doThrow(new InternalServerException(400, "INTERNAL_SERVER_EXCEPTION", "internal exception"))
                 .when(applicationService).saveHouse(any());
-        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1")
+                                                       .price(BigDecimal.TEN).location("location").build();
 
         // when
         controller.save(command);

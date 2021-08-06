@@ -32,7 +32,8 @@ public class HouseApplicationService {
     }
 
     public void saveHouse(CreateHouseCommand command) {
-        House house = House.init(command.getName(), command.getLocation(), command.getPrice(), command.getEstablishedTime());
+        House house = House.init(command.getName(), command.getLocation(),
+                command.getPrice(), command.getEstablishedTime());
         House savedHouse = this.houseRepository.saveHouse(house);
 
         try {

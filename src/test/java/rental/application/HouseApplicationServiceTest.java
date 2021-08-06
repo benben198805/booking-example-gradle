@@ -95,7 +95,8 @@ public class HouseApplicationServiceTest {
 
         doNothing().when(houseManagementServiceClient).saveHouse(any());
 
-        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1")
+                                                       .price(BigDecimal.TEN).location("location").build();
 
         // when
         applicationService.saveHouse(command);
@@ -114,7 +115,8 @@ public class HouseApplicationServiceTest {
         doThrow(new InternalServerException(400, "INTERNAL_SERVER_EXCEPTION", "internal exception"))
                 .when(houseManagementServiceClient).saveHouse(any());
 
-        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").price(BigDecimal.TEN).location("location").build();
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1")
+                                                       .price(BigDecimal.TEN).location("location").build();
 
         // when
         try {
