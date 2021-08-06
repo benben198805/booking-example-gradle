@@ -65,4 +65,18 @@ public class HouseRepositoryImplTest {
         assertEquals(20, result.getContent().size());
         assertEquals(2, result.getTotalPages());
     }
+
+    @Test
+    public void should_find_0_houses_with_page() {
+        // given
+        PageRequest pageable = PageRequest.of(0, 20);
+
+        // when
+        Page<House> result = this.repository.queryAllHouses(pageable);
+
+        // then
+        assertEquals(0, result.getTotalElements());
+        assertEquals(0, result.getContent().size());
+        assertEquals(0, result.getTotalPages());
+    }
 }
