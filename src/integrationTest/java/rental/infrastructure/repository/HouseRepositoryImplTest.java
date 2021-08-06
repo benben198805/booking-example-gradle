@@ -35,7 +35,7 @@ public class HouseRepositoryImplTest {
     }
 
     @Test
-    public void should_find_all_houses() {
+    public void should_find_2_houses_with_page() {
         // given
         entityManager.persistAndFlush(HouseEntity.builder().name("house-1").build());
         entityManager.persistAndFlush(HouseEntity.builder().name("house-2").build());
@@ -47,5 +47,22 @@ public class HouseRepositoryImplTest {
         // then
         assertEquals(2, result.getTotalElements());
         assertEquals(2, result.getContent().size());
+    }
+
+    @Test
+    public void should_find_21_houses_with_page() {
+        // given
+        for (int index = 1; index <= 21; index++) {
+            entityManager.persistAndFlush(HouseEntity.builder().name("house-" + index).build());
+        }
+        PageRequest pageable = PageRequest.of(0, 20);
+
+        // when
+        Page<House> result = this.repository.queryAllHouses(pageable);
+
+        // then
+        assertEquals(21, result.getTotalElements());
+        assertEquals(20, result.getContent().size());
+        assertEquals(2, result.getTotalPages());
     }
 }
