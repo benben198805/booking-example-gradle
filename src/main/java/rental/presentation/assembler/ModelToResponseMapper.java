@@ -1,7 +1,7 @@
 package rental.presentation.assembler;
 
-import rental.domain.model.PromotionProposal;
-import rental.presentation.dto.response.promotion.PromotionProposalResponse;
+import rental.domain.model.House;
+import rental.presentation.dto.response.promotion.HouseResponse;
 import rental.utils.DateUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,7 +21,7 @@ public interface ModelToResponseMapper {
     @Mapping(target = "establishedTime", source = "model.establishedTime", qualifiedByName = "toTimestamp")
     @Mapping(target = "createdTime", source = "model.createdTime", qualifiedByName = "toTimestamp")
     @Mapping(target = "updatedTime", source = "model.createdTime", qualifiedByName = "toTimestamp")
-    PromotionProposalResponse mapToPromotionProposalResponse(PromotionProposal model);
+    HouseResponse mapToPromotionProposalResponse(House model);
 
     @Named("toTimestamp")
     default long toTimestamp(LocalDateTime localDateTime) {

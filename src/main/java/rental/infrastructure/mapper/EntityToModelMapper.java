@@ -1,7 +1,7 @@
 package rental.infrastructure.mapper;
 
-import rental.domain.model.PromotionProposal;
-import rental.infrastructure.dataentity.PromotionProposalEntity;
+import rental.domain.model.House;
+import rental.infrastructure.dataentity.HouseEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
@@ -13,6 +13,6 @@ public interface EntityToModelMapper {
 
     EntityToModelMapper INSTANCE = Mappers.getMapper(EntityToModelMapper.class);
 
-    PromotionProposal mapToModel(PromotionProposalEntity entity);
+    House mapToModel(HouseEntity entity);
 
 }

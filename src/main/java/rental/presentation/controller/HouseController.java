@@ -1,9 +1,9 @@
 package rental.presentation.controller;
 
-import rental.application.PromotionProposalApplicationService;
-import rental.domain.model.PromotionProposal;
+import rental.application.HouseApplicationService;
+import rental.domain.model.House;
 import rental.presentation.assembler.ModelToResponseMapper;
-import rental.presentation.dto.response.promotion.PromotionProposalResponse;
+import rental.presentation.dto.response.promotion.HouseResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,27 +18,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/promotion-proposal")
+@RequestMapping("/houses")
 @Slf4j
 @Validated
 @AllArgsConstructor
-public class PromotionProposalController {
+public class HouseController {
     private static final int DEFAULT_PAGE_SIZE = 20;
 
-    private final PromotionProposalApplicationService promotionProposalApplicationService;
+    private final HouseApplicationService promotionProposalApplicationService;
 
     @GetMapping
-    public Page<PromotionProposalResponse> queryAllPromotionProposals(
+    public Page<HouseResponse> queryAllHouses(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
             @SortDefault(sort = "createdTime", direction = Sort.Direction.DESC)
                     Pageable pageable) {
-        return promotionProposalApplicationService.queryAllPromotionProposal(pageable)
+        return promotionProposalApplicationService.queryAllHouses(pageable)
                                                   .map(ModelToResponseMapper.INSTANCE::mapToPromotionProposalResponse);
     }
 
     @GetMapping("/{id}")
-    public PromotionProposalResponse queryPromotionProposalById(@PathVariable Long id) {
-        PromotionProposal promotionProposal = promotionProposalApplicationService.queryPromotionProposal(id);
+    public HouseResponse queryPromotionProposalById(@PathVariable Long id) {
+        House promotionProposal = promotionProposalApplicationService.queryPromotionProposal(id);
         return ModelToResponseMapper.INSTANCE.mapToPromotionProposalResponse(promotionProposal);
     }
 
