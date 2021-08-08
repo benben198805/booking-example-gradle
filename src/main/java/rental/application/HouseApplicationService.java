@@ -1,9 +1,6 @@
 package rental.application;
 
-import feign.FeignException;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.openfeign.encoding.FeignClientEncodingProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
