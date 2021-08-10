@@ -27,11 +27,6 @@ public class LayerDependencyRulesTest {
             .that().resideInAPackage("..domain..")
             .should().accessClassesThat().resideInAPackage("..presentation..");
 
-    //    @ArchTest
-    //    public static final ArchRule application_should_not_access_presentation = noClasses()
-    //            .that().resideInAPackage("..application..")
-    //            .should().accessClassesThat().resideInAPackage("..presentation..");
-
     @ArchTest
     public static final ArchRule application_should_not_access_infrastructure = noClasses()
             .that().resideInAPackage("..application..")
