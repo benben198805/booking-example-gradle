@@ -65,7 +65,7 @@ public class HouseApplicationServiceTest {
     @Test
     public void should_get_house_by_id() {
         // given
-        String expectedName = "hosue-1";
+        String expectedName = "house-1";
         House house = House.builder().id(1L).name(expectedName).build();
         when(repository.findById(eq(1L))).thenReturn(Optional.of(house));
 

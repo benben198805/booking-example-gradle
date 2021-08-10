@@ -21,6 +21,8 @@ import rental.presentation.assembler.ModelToResponseMapper;
 import rental.presentation.dto.command.CreateHouseCommand;
 import rental.presentation.dto.response.house.HouseResponse;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/houses")
 @Slf4j
@@ -47,7 +49,7 @@ public class HouseController {
     }
 
     @PostMapping
-    public void save(@RequestBody CreateHouseCommand command) {
+    public void save(@Valid @RequestBody CreateHouseCommand command) {
         promotionProposalApplicationService.saveHouse(command);
     }
 

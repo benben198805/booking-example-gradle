@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
@@ -117,6 +118,23 @@ public class HouseControllerTest {
 
         // then
         verify(applicationService, times(1)).saveHouse(any());
+    }
+
+    @Test
+    public void should_throw_exception_when_save_house_without_required_attr() throws Exception {
+        // given
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").build();
+
+        // when
+        mvc.perform(
+                post("/houses")
+                        .content(objectMapper.writeValueAsString(command))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.code").value("INVALID_PARAM"));
+
+        // then
     }
 
     @Test

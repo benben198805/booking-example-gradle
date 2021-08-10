@@ -72,6 +72,19 @@ public class HouseRepositoryImplTest {
     }
 
     @Test
+    public void should_find_0_houses_with_page() {
+        // given
+        PageRequest pageable = PageRequest.of(0, 20);
+
+        // when
+        Page<House> result = this.repository.queryAllHouses(pageable);
+
+        // then
+        assertEquals(0, result.getTotalElements());
+        assertEquals(0, result.getContent().size());
+    }
+
+    @Test
     public void should_get_house_with_id() {
         // given
         HouseEntity houseEntity = entityManager.persistAndFlush(HouseEntity.builder().name("house-1").build());

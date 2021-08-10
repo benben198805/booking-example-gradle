@@ -105,6 +105,21 @@ public class HouseControllerAPITest extends BaseIntegrationTest {
     }
 
     @Test
+    public void should_throw_exception_when_save_house_without_command() throws Exception {
+        // given
+        CreateHouseCommand command = CreateHouseCommand.builder().name("house-1").build();
+
+        // when
+        given()
+                .body(objectMapper.writeValueAsString(command))
+                .when()
+                .post("/houses")
+                .then()
+                .statusCode(400)
+                .body("code", is("INVALID_PARAM"));
+    }
+
+    @Test
     public void should_throw_exception_when_save_house_has_feign_exception() throws Exception {
         // given
         CreateHouseCommand command = CreateHouseCommand.builder().name("house-1")
