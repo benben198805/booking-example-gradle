@@ -11,6 +11,7 @@ import rental.BookingTicketServiceApplication;
 import rental.client.model.SettingsDto;
 import rental.config.WireMockConfig;
 import rental.config.client.AirportInfoClientMocks;
+import rental.presentation.exception.InternalServerException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(
@@ -29,7 +30,17 @@ public class AirportInfoServiceClientTest {
     public void should_save_lock_settings() throws Exception {
         // given
         SettingsDto settingsDto = SettingsDto.builder().userID("410123123412341234").userName("XXX").build();
-        AirportInfoClientMocks.setupSuccessMockBooksResponse(mockServer);
+        AirportInfoClientMocks.setupSuccessMockResponse(mockServer);
+
+        // when
+        client.takeSettings("1", settingsDto);
+    }
+
+    @Test(expected = InternalServerException.class)
+    public void should_throw_exception_when_call_airport_info_fail() throws Exception {
+        // given
+        SettingsDto settingsDto = SettingsDto.builder().userID("410123123412341234").userName("XXX").build();
+        AirportInfoClientMocks.setupFailMockResponse(mockServer);
 
         // when
         client.takeSettings("1", settingsDto);

@@ -14,7 +14,6 @@ import rental.BookingTicketServiceApplication;
 import rental.config.BaseIntegrationTest;
 import rental.config.WireMockConfig;
 import rental.config.client.AirportInfoClientMocks;
-import rental.infrastructure.persistence.ETicketJpaPersistence;
 import rental.presentation.dto.command.CreateETicketCommand;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,7 +44,7 @@ public class ETicketControllerAPITest extends BaseIntegrationTest {
         String userId = "user-id";
         CreateETicketCommand command = CreateETicketCommand.builder().flight(flight)
                                                            .userID(userId).userName(userName).build();
-        AirportInfoClientMocks.setupSuccessMockBooksResponse(mockServer);
+        AirportInfoClientMocks.setupSuccessMockResponse(mockServer);
 
         // when
         given()
