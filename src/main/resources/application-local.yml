@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/rental_database?characterEncoding=UTF-8&useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/booking_ticket_database?characterEncoding=UTF-8&useSSL=false&createDatabaseIfNotExist=true
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver

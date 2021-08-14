@@ -19,6 +19,8 @@ public class ETicket {
 
     private ETicketStatus status;
 
+    private String callbackId;
+
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
