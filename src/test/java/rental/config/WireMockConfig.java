@@ -11,7 +11,7 @@ public class WireMockConfig {
     private WireMockServer wireMockServer;
 
     @Bean(initMethod = "start", destroyMethod = "stop")
-    public WireMockServer mockBooksService() {
-        return new WireMockServer(8089);
+    public WireMockServer mockAirportInfoService() {
+        return new WireMockServer(8099);
     }
 }

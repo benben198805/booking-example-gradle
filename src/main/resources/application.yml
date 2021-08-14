@@ -9,10 +9,6 @@ management:
       exposure:
         include: "*"
 
-application:
-  services:
-    house-management: 127.0.0.1:8089
-
 spring:
   profiles:
     active: local
