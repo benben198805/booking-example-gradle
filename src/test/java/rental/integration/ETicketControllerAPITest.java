@@ -16,6 +16,8 @@ import rental.config.WireMockConfig;
 import rental.config.client.AirportInfoClientMocks;
 import rental.presentation.dto.command.CreateETicketCommand;
 
+import static org.hamcrest.Matchers.is;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
@@ -53,5 +55,25 @@ public class ETicketControllerAPITest extends BaseIntegrationTest {
                 .post("/booking-orders/1/e-tickets")
                 .then()
                 .statusCode(201);
+    }
+
+    @Test
+    public void should_create_fail_eTicket_when_client_throw_exception() throws Exception {
+        // given
+        String flight = "CA123";
+        String userName = "user-name";
+        String userId = "user-id";
+        CreateETicketCommand command = CreateETicketCommand.builder().flight(flight)
+                                                           .userID(userId).userName(userName).build();
+        AirportInfoClientMocks.setupFailMockResponse(mockServer);
+
+        // when
+        given()
+                .body(objectMapper.writeValueAsString(command))
+                .when()
+                .post("/booking-orders/1/e-tickets")
+                .then()
+                .statusCode(201)
+                .body("status", is("FAIL"));
     }
 }
