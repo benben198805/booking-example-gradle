@@ -16,3 +16,7 @@ spring:
     console:
       enabled: true
 
+application:
+  services:
+    airport-info-system: 127.0.0.1:8089
+

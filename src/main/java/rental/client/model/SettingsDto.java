@@ -6,18 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class HouseDto {
-    private Long id;
-
-    private String name;
-
-    private String location;
-    private LocalDateTime establishedTime;
+public class SettingsDto {
+    private String userName;
+    private String userID;
 }

@@ -20,4 +20,33 @@ import java.util.Objects;
 @Slf4j
 @Configuration
 public class FeignClientConfig {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Bean
+    public ErrorDecoder feignErrorHandler() {
+        final ErrorDecoder errorDecoder = new ErrorDecoder.Default();
+
+        return (String methodKey, Response response) -> {
+            if (Objects.nonNull(HttpStatus.resolve(response.status()))) {
+                if (HttpStatus.resolve(response.status()).is2xxSuccessful()) {
+                    return errorDecoder.decode(methodKey, response);
+                } else if (HttpStatus.resolve(response.status()).is4xxClientError()) {
+                    ErrorResponse errorResponse = new ErrorResponse();
+                    try {
+                        errorResponse = objectMapper.readValue(IOUtils.toString(response.body().asInputStream(),
+                                Charsets.UTF_8), ErrorResponse.class);
+                        System.out.println(errorResponse);
+                    } catch (IOException e) {
+                        log.error("read internal response body exception. {}", e.toString());
+                    }
+
+                    return new InternalServerException(response.status(), errorResponse.getCode(),
+                            errorResponse.getMessage());
+                }
+            }
+
+            return new InternalServerException(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                    "INTERNAL_SERVER_ERROR", UriUtils.decode(response.request().url(), StandardCharsets.UTF_8));
+        };
+    }
 }
