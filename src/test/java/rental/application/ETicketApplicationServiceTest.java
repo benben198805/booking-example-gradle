@@ -86,7 +86,7 @@ public class ETicketApplicationServiceTest {
         when(orderRepository.findOrderById(any())).thenReturn(Optional.empty());
 
         // when
-        ETicket eTicket = applicationService.create(1L, "AC83", "user-name", "user-id");
+        applicationService.create(1L, "AC83", "user-name", "user-id");
 
         // then
     }
