@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import rental.client.application.ETicketApplicationService;
+import rental.application.ETicketApplicationService;
 import rental.domain.model.ETicket;
 import rental.presentation.assembler.ModelToResponseMapper;
 import rental.presentation.dto.command.CreateETicketCommand;

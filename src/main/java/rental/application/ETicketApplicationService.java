@@ -1,4 +1,4 @@
-package rental.client.application;
+package rental.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

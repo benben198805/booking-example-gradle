@@ -17,8 +17,8 @@ public class ETicketRepositoryImpl implements ETicketRepository {
     private final ETicketJpaPersistence persistence;
 
     @Override
-    public ETicket create(ETicket house) {
-        ETicketEntity savedETicketEntity = this.persistence.save(ModelToEntityMapper.INSTANCE.mapToEntity(house));
+    public ETicket create(ETicket eTicket) {
+        ETicketEntity savedETicketEntity = this.persistence.save(ModelToEntityMapper.INSTANCE.mapToEntity(eTicket));
         return EntityToModelMapper.INSTANCE.mapToModel(savedETicketEntity);
     }
 }
