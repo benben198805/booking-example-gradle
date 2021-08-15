@@ -31,7 +31,8 @@ public class ETicketController {
     public ETicketResponse create(
             @PathVariable(value = "oid") Long orderId,
             @Valid @RequestBody CreateETicketCommand command) {
-        ETicket eTicket = applicationService.create(orderId, command.getFlight(), command.getUserName(), command.getUserID());
+        ETicket eTicket = applicationService.create(orderId, command.getFlight(),
+                command.getUserName(), command.getUserID());
 
         return ModelToResponseMapper.INSTANCE.mapToETicketResponse(eTicket);
     }
