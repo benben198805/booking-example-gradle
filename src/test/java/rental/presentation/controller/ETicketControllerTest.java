@@ -33,6 +33,7 @@ public class ETicketControllerTest {
 
     @MockBean
     private ETicketApplicationService applicationService;
+
     private ObjectMapper objectMapper;
 
     @Before

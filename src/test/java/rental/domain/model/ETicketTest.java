@@ -10,7 +10,7 @@ public class ETicketTest {
     @Test
     public void should_init_e_ticket() {
         // given
-        long orderId = 1l;
+        long orderId = 1L;
 
         // when
         ETicket eTicket = ETicket.init(orderId);

@@ -16,7 +16,8 @@ public class AirportInfoClientMocks {
 
     public static void setupSuccessMockResponse(WireMockServer mockService) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        SettingsResponse successResponse = SettingsResponse.builder().status("SUCCESS").callbackId("s3641729289463").build();
+        SettingsResponse successResponse = SettingsResponse.builder().status("SUCCESS")
+                                                           .callbackId("s3641729289463").build();
         mockService.stubFor(WireMock.post(WireMock.urlMatching("/flight/?.*/settings"))
                                     .willReturn(WireMock.aResponse()
                                                         .withStatus(HttpStatus.OK.value())
