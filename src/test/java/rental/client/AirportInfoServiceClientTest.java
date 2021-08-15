@@ -1,17 +1,25 @@
 package rental.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import rental.BookingTicketServiceApplication;
 import rental.client.model.SettingsDto;
+import rental.client.model.SettingsResponse;
 import rental.config.WireMockConfig;
 import rental.config.client.AirportInfoClientMocks;
 import rental.presentation.exception.InternalServerException;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(
@@ -19,6 +27,8 @@ import rental.presentation.exception.InternalServerException;
         classes = BookingTicketServiceApplication.class
 )
 @ContextConfiguration(classes = {WireMockConfig.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 public class AirportInfoServiceClientTest {
 
     @Autowired
@@ -33,7 +43,11 @@ public class AirportInfoServiceClientTest {
         AirportInfoClientMocks.setupSuccessMockResponse(mockServer);
 
         // when
-        client.takeSettings("1", settingsDto);
+        SettingsResponse settingsResponse = client.takeSettings("1", settingsDto);
+
+        // then
+        assertEquals("s3641729289463",  settingsResponse.getCallbackId());
+        assertEquals("SUCCESS",  settingsResponse.getStatus());
     }
 
     @Test(expected = InternalServerException.class)

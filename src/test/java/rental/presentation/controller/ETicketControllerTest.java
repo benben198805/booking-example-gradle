@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import rental.client.application.ETicketApplicationService;
+import rental.application.ETicketApplicationService;
 import rental.presentation.dto.command.CreateETicketCommand;
 import rental.presentation.exception.NotFoundException;
 

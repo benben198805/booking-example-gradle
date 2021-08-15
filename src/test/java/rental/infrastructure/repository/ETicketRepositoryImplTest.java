@@ -36,13 +36,13 @@ public class ETicketRepositoryImplTest {
     @Test
     public void should_create_eTicket() {
         // given
-        ETicket house = ETicket.builder().status(ETicketStatus.PENDING).build();
+        ETicket eTicket = ETicket.builder().status(ETicketStatus.PENDING).build();
 
         // when
-        ETicket result = this.repository.create(house);
+        ETicket result = this.repository.create(eTicket);
 
         // then
-        ETicketEntity houseEntity = entityManager.getEntityManager().find(ETicketEntity.class, result.getId());
-        assertEquals(ETicketStatus.PENDING, houseEntity.getStatus());
+        ETicketEntity eTicketEntity = entityManager.getEntityManager().find(ETicketEntity.class, result.getId());
+        assertEquals(ETicketStatus.PENDING, eTicketEntity.getStatus());
     }
 }
