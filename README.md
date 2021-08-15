@@ -10,14 +10,3 @@
 ```
 ./gradlew clean build
 ```
-
-### 本地运行
-```
-./gradlew bootRun
-```
-
-### 用Intellij IDEA打开项目
-```
-./gradlew idea
-open rental-brand.ipr
-```
