@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import rental.BookingTicketServiceApplication;
+import rental.ServiceApplication;
 import rental.config.BaseIntegrationTest;
 import rental.config.WireMockConfig;
 import rental.config.client.AirportInfoClientMocks;
@@ -24,7 +23,7 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = BookingTicketServiceApplication.class
+        classes = ServiceApplication.class
 )
 @ContextConfiguration(classes = {WireMockConfig.class})
 public class ETicketControllerAPITest extends BaseIntegrationTest {
